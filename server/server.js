@@ -3,7 +3,7 @@ require('./config/config');
 const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
-const {ObjectID} = require('mongodb');
+const {ObjectID} = require('mongodb'); //mongoDB - library for the mongoDB in node js
 
 var {mongoose} = require('./db/mongoose');
 var {Todo} = require('./models/todo');

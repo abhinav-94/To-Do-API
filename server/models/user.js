@@ -12,13 +12,14 @@ var UserSchema = new mongoose.Schema({
     minlength: 1,
     unique: true,
     validate: {
+      isAsync:false,
       validator: validator.isEmail,
       message: '{VALUE} is not a valid email'
     }
   },
   password: {
     type: String,
-    require: true,
+    require: true,                    //usePushEach: true
     minlength: 6
   },
   tokens: [{
@@ -28,10 +29,15 @@ var UserSchema = new mongoose.Schema({
     },
     token: {
       type: String,
-      required: true
+      required: true,
+
     }
   }]
-});
+
+},
+{usePushEach: true});
+UserSchema.set({usePushEach:true});
+
 
 UserSchema.methods.toJSON = function () {
   var user = this;
@@ -88,7 +94,6 @@ UserSchema.statics.findByCredentials = function (email, password) {
     }
 
     return new Promise((resolve, reject) => {
-      // Use bcrypt.compare to compare password and user.password
       bcrypt.compare(password, user.password, (err, res) => {
         if (res) {
           resolve(user);
